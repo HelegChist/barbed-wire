@@ -1,5 +1,7 @@
 import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, TEXT_COLOR } from '../constants/Color';
+import AddButton from './AddButton';
+import React from 'react';
 
 const Item = ({title}) => (
     <View style={styles.item}>
@@ -27,9 +29,14 @@ export default function List() {
         <SafeAreaView style={styles.container}>
             <FlatList
                 data={DATA}
-                renderItem={({item}) => <Item title={item.title} />}
+                renderItem={({item}) => <Item title={item.title}/>}
                 keyExtractor={item => item.id}
             />
+            <AddButton
+                text='+'
+            >
+
+            </AddButton>
         </SafeAreaView>
     );
 }
