@@ -32,11 +32,7 @@ export default function List() {
                 renderItem={({item}) => <Item title={item.title}/>}
                 keyExtractor={item => item.id}
             />
-            <AddButton
-                text='+'
-            >
-
-            </AddButton>
+            <AddButton/>
         </SafeAreaView>
     );
 }
