@@ -7,41 +7,45 @@ import SettingScreen from './screens/SettingScreen';
 import TodayScreen from './screens/TodayScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import DarculaTheme from './constants/DarculaTheme';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 
 function App() {
     return (
-        <NavigationContainer theme={DarculaTheme}>
-            <Tab.Navigator
-                screenOptions={({route}) => ({
-                    tabBarStyle: {backgroundColor: ITEM_BACKGROUND_COLOR},
-                    headerStyle: {
-                        backgroundColor: ITEM_BACKGROUND_COLOR,
-                    },
-                    headerTintColor: TEXT_COLOR,
-                    tabBarIcon: ({focused, color, size}) => {
-                        color = focused ? ACTIVE_COLOR : TEXT_COLOR;
+        <SafeAreaProvider>
+            <NavigationContainer theme={DarculaTheme}>
+                <Tab.Navigator
+                    screenOptions={({route}) => ({
+                        tabBarStyle: {backgroundColor: ITEM_BACKGROUND_COLOR},
+                        headerStyle: {
+                            backgroundColor: ITEM_BACKGROUND_COLOR,
+                        },
+                        headerTintColor: TEXT_COLOR,
 
-                        let iconName;
-                        if (route.name === 'Production') {
-                            iconName = 'man-sharp';
-                        } else if (route.name === 'Settings') {
-                            iconName = 'settings';
-                        }
-                        return <Ionicons name={iconName} size={size} color={color}/>;
-                    },
-                    tabBarActiveTintColor: 'tomato',
-                    tabBarInactiveTintColor: 'gray',
-                })}>
-                <Tab.Screen name="Production"
-                            component={TodayScreen}
-                            options={{title: 'Выработка'}}/>
-                <Tab.Screen name="Settings"
-                            component={SettingScreen}
-                            options={{title: 'Настройки'}}/>
-            </Tab.Navigator>
-        </NavigationContainer>
+                        tabBarIcon: ({focused, color, size}) => {
+                            color = focused ? ACTIVE_COLOR : TEXT_COLOR;
+                            let iconName;
+                            if (route.name === 'Production') {
+                                iconName = 'man-sharp';
+                            } else if (route.name === 'Settings') {
+                                iconName = 'settings';
+                            }
+                            return <Ionicons name={iconName} size={size} color={color}/>;
+                        },
+                        tabBarActiveTintColor: ACTIVE_COLOR,
+                        tabBarInactiveTintColor: TEXT_COLOR,
+                    })}>
+                    <Tab.Screen name="Production"
+                                component={TodayScreen}
+                                options={{title: 'Выработка'}}/>
+                    <Tab.Screen name="Settings"
+                                component={SettingScreen}
+                                options={{title: 'Настройки'}}/>
+                </Tab.Navigator>
+            </NavigationContainer>
+        </SafeAreaProvider>
+
     );
 }
 
