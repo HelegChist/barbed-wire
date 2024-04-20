@@ -8,7 +8,7 @@ const Item = ({title}) => (
         <Text style={styles.title}>{title}</Text>
     </View>
 );
-export default function List() {
+export default function List({navigation}) {
 
     const DATA = [
         {
@@ -32,7 +32,7 @@ export default function List() {
                 renderItem={({item}) => <Item title={item.title}/>}
                 keyExtractor={item => item.id}
             />
-            <AddButton/>
+            <AddButton onAddPress={() => navigation.navigate('ItemFormModal')}/>
         </SafeAreaView>
     );
 }

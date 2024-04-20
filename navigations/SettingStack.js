@@ -15,7 +15,7 @@ const SettingStack = () => {
                 <Stack.Screen name="SettingScreen" component={SettingScreen}/>
             </Stack.Group>
             <Stack.Group screenOptions={{presentation: 'modal'}}>
-                <Stack.Screen name="MyModal" component={ItemFormModal}/>
+                <Stack.Screen name="ItemFormModal" component={ItemFormModal}/>
             </Stack.Group>
         </Stack.Navigator>
     );

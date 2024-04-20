@@ -2,10 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import List from '../components/List';
 
-const SettingScreen = () => {
+const SettingScreen = ({navigation}) => {
     return (
         <View style={{flex: 1}}>
-            <List></List>
+            <List navigation={navigation}></List>
         </View>
     );
 };
