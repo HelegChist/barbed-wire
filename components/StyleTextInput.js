@@ -8,7 +8,7 @@ const StyleTextInput = props => {
             cursorColor={ACTIVE_COLOR}
             style={GlobalStyles.input}
             placeholder={props.placeholder}
-            onChangeText={() => props.onChangeText()}
+            onChangeText={props.onChangeText}
             value={props.value}
             placeholderTextColor={PLACEHOLDER_COLOR}
             keyboardType={props.keyboardType}

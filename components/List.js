@@ -3,9 +3,10 @@ import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, TEXT_COLOR } from '../constants/Co
 import AddButton from './AddButton';
 import React from 'react';
 
-const Item = ({title}) => (
+const Item = ({props}) => (
     <View style={styles.item}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title}>{props.nomenclature}</Text>
+        <Text style={styles.price}>{props.price}</Text>
     </View>
 );
 export default function List({navigation}) {
@@ -13,26 +14,31 @@ export default function List({navigation}) {
     const DATA = [
         {
             id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            title: 'First Item',
+            nomenclature: 'Гайка М8',
+            price: 23,
         },
         {
             id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-            title: 'Second Item',
+            nomenclature: 'Сфера радиус 99',
+            price: 150,
         },
         {
             id: '58694a0f-3da1-471f-bd96-145571e29d72',
-            title: 'Third Item',
+            nomenclature: 'Шпиндель',
+            price: 200,
         },
     ];
+
+    const [data] = React.useState(DATA);
 
     return (
         <SafeAreaView style={styles.container}>
             <FlatList
-                data={DATA}
-                renderItem={({item}) => <Item title={item.title}/>}
+                data={data}
+                renderItem={({item}) => <Item props={item} />}
                 keyExtractor={item => item.id}
             />
-            <AddButton onAddPress={() => navigation.navigate('ItemFormModal')}/>
+            <AddButton onAddPress={() => navigation.navigate('ItemFormModal', data)}/>
         </SafeAreaView>
     );
 }
@@ -53,6 +59,10 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     title: {
+        color: TEXT_COLOR,
+        fontSize: 18,
+    },
+    price: {
         color: TEXT_COLOR,
         fontSize: 32,
     },
