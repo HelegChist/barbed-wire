@@ -2,40 +2,35 @@ import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react
 import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, TEXT_COLOR } from '../constants/Color';
 import AddButton from './AddButton';
 import React from 'react';
+import { useSQLiteContext } from 'expo-sqlite/next';
 
 const Item = ({props}) => (
     <View style={styles.item}>
-        <Text style={styles.title}>{props.nomenclature}</Text>
+        <Text style={styles.title}>{props.name}</Text>
         <Text style={styles.price}>{props.price}</Text>
     </View>
 );
 export default function List({navigation}) {
 
-    const DATA = [
-        {
-            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            nomenclature: 'Гайка М8',
-            price: 23,
-        },
-        {
-            id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-            nomenclature: 'Сфера радиус 99',
-            price: 150,
-        },
-        {
-            id: '58694a0f-3da1-471f-bd96-145571e29d72',
-            nomenclature: 'Шпиндель',
-            price: 200,
-        },
-    ];
+    const db = useSQLiteContext();
+    const [data, setData] = React.useState([]);
 
-    const [data] = React.useState(DATA);
+    React.useEffect(() => {
+        db.withTransactionAsync(async () => {
+            await getData();
+        });
+    }, [db]);
+
+    async function getData() {
+        const result = await db.getAllAsync('SELECT * FROM nomenclature');
+        setData(result);
+    }
 
     return (
         <SafeAreaView style={styles.container}>
             <FlatList
                 data={data}
-                renderItem={({item}) => <Item props={item} />}
+                renderItem={({item}) => <Item props={item}/>}
                 keyExtractor={item => item.id}
             />
             <AddButton onAddPress={() => navigation.navigate('ItemFormModal', data)}/>
