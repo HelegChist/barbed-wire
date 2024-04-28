@@ -1,15 +1,19 @@
-import { DeviceEventEmitter, FlatList, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
-import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, TEXT_COLOR } from '../constants/Color';
+import {
+    DeviceEventEmitter,
+    FlatList,
+    SafeAreaView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, PLACEHOLDER_COLOR, TEXT_COLOR } from '../constants/Color';
 import AddButton from './AddButton';
 import React from 'react';
 import { useSQLiteContext } from 'expo-sqlite/next';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-const Item = ({props}) => (
-    <View style={styles.item}>
-        <Text style={styles.title}>{props.name}</Text>
-        <Text style={styles.price}>{props.price}</Text>
-    </View>
-);
 export default function List({navigation}) {
     DeviceEventEmitter.addListener("event.updateBd", () => getData());
 
@@ -17,15 +21,34 @@ export default function List({navigation}) {
     const [data, setData] = React.useState([]);
 
     React.useEffect(() => {
-        db.withTransactionAsync(async () => {
-            await getData();
-        });
+        db.withTransactionAsync(async () => await getData());
     }, [db]);
 
     async function getData() {
         const result = await db.getAllAsync('SELECT * FROM nomenclature');
         setData(result);
     }
+
+    async function deleteNomenclature(id) {
+        await db.getAllAsync(`DELETE
+                              FROM nomenclature
+                              WHERE id = ?`, id);
+        await getData();
+    }
+
+    const Item = ({props}) => (
+        <View style={styles.item}>
+            <View>
+                <Text style={styles.title}>{props.name}</Text>
+                <Text style={styles.price}>{props.price}</Text>
+            </View>
+            <TouchableOpacity
+                onPress={() => deleteNomenclature(props.id)}
+                style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
+                <Ionicons name='trash' size={32} color={PLACEHOLDER_COLOR}/>
+            </TouchableOpacity>
+        </View>
+    );
 
     return (
         <SafeAreaView style={styles.container}>
@@ -47,6 +70,8 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
     item: {
+        flex: 1,
+        flexDirection: 'row',
         backgroundColor: ITEM_BACKGROUND_COLOR,
         borderWidth: 1,
         borderColor: BORDER_COLOR,
