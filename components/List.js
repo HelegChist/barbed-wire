@@ -23,6 +23,7 @@ export default function List({navigation}) {
 
     async function getData() {
         const result = await db.getAllAsync('SELECT * FROM nomenclature');
+        console.log(result);
         setData(result);
     }
 
@@ -33,7 +34,7 @@ export default function List({navigation}) {
                 renderItem={({item}) => <Item props={item}/>}
                 keyExtractor={item => item.id}
             />
-            <AddButton onAddPress={() => navigation.navigate('ItemFormModal', data)}/>
+            <AddButton onAddPress={() => navigation.navigate('ItemFormModal')}/>
         </SafeAreaView>
     );
 }

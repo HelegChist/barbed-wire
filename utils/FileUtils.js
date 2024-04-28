@@ -1,15 +1,20 @@
 import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
 
-async function loadDatabase() {
-    if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
-        await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
+const loadDatabase = async () => {
+    const dbName = "barbedWire.db";
+    const dbAsset = require("../assets/barbedWire.db");
+    const dbUri = Asset.fromModule(dbAsset).uri;
+    const dbFilePath = `${FileSystem.documentDirectory}SQLite/${dbName}`;
+
+    const fileInfo = await FileSystem.getInfoAsync(dbFilePath);
+    if (!fileInfo.exists) {
+        await FileSystem.makeDirectoryAsync(
+            `${FileSystem.documentDirectory}SQLite`,
+            { intermediates: true }
+        );
+        await FileSystem.downloadAsync(dbUri, dbFilePath);
     }
-    const asset = await Asset.fromModule(require('../assets/barbedWire.db')).downloadAsync();
-    await FileSystem.copyAsync({
-        from: asset.localUri,
-        to: FileSystem.documentDirectory + 'SQLite/barbedWire.db',
-    });
-}
+};
 
 export { loadDatabase };
