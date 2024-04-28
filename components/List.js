@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { DeviceEventEmitter, FlatList, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, TEXT_COLOR } from '../constants/Color';
 import AddButton from './AddButton';
 import React from 'react';
@@ -11,6 +11,7 @@ const Item = ({props}) => (
     </View>
 );
 export default function List({navigation}) {
+    DeviceEventEmitter.addListener("event.updateBd", () => getData());
 
     const db = useSQLiteContext();
     const [data, setData] = React.useState([]);
@@ -23,7 +24,6 @@ export default function List({navigation}) {
 
     async function getData() {
         const result = await db.getAllAsync('SELECT * FROM nomenclature');
-        console.log(result);
         setData(result);
     }
 
