@@ -16,18 +16,19 @@ export default AddButton;
 
 const styles = StyleSheet.create({
     cont: {
+        position: 'absolute',
+        bottom: 10,
         alignSelf: 'center',
-        marginBottom: StatusBar.currentHeight || 0,
+        zIndex: 1,
         height: 60,
         width: 60,
         borderRadius: 30,
-        backgroundColor: ITEM_BACKGROUND_COLOR,
         justifyContent: 'center',
         alignItems: 'center',
     },
     image: {
         tintColor: ACTIVE_COLOR,
-        height: 50,
-        width: 50,
+        height: 45,
+        width: 45,
     },
 });
