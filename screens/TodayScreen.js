@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite/next';
 import { useIsFocused } from '@react-navigation/native';
+import ActiveWorkday from '../components/ActiveWorkday';
 
 const TodayScreen = () => {
     const db = useSQLiteContext();
@@ -27,7 +28,7 @@ const TodayScreen = () => {
 
     const loadWorkdayById = (id) => {
         return db.getAllSync(`
-            SELECT n.name, COUNT(n.name) as count, SUM(n.price) as sum
+            SELECT w.id, n.name, COUNT(n.name) as count, SUM(n.price) as sum
             FROM workday w
                 JOIN production p
             ON w.id = p.workday_id
@@ -40,15 +41,11 @@ const TodayScreen = () => {
         return (
             <View>
                 <Text>Создать новый день</Text>
-            </View>);
+            </View>
+        );
     }
 
-    return (
-        <View>
-            <Text>${JSON.stringify(productions)}</Text>
-            <Text>Закрыть день</Text>
-        </View>
-    );
+    return <ActiveWorkday productions={productions}/>;
 };
 
 export default TodayScreen;
