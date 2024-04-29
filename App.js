@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import DarculaTheme from './constants/DarculaTheme';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import TabNavigators from './navigations/TabNavigators';
-import { loadDatabase } from './utils/FileUtils';
+import { deleteDatabase, loadDatabase } from './utils/FileUtils';
 import { SQLiteProvider } from 'expo-sqlite/next';
 
 function App() {
@@ -12,9 +12,11 @@ function App() {
     const [dbLoaded, setDbLoaded] = React.useState(false);
 
     React.useEffect(() => {
-        loadDatabase()
-            .then(() => setDbLoaded(true))
-            .catch((e) => console.error(e));
+        deleteDatabase().then(() => {
+            loadDatabase()
+                .then(() => setDbLoaded(true))
+                .catch((e) => console.error(e));
+        })
     }, []);
 
     if (!dbLoaded)
