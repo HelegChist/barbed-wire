@@ -1,5 +1,5 @@
-import { Image, StatusBar, StyleSheet, TouchableOpacity } from 'react-native';
-import { ACTIVE_COLOR, ITEM_BACKGROUND_COLOR } from '../constants/Color';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { ACTIVE_COLOR } from '../constants/Color';
 
 const AddButton = ({onAddPress}) => {
     return (

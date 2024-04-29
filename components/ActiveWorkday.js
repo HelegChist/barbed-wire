@@ -2,6 +2,7 @@ import React from 'react';
 import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, PLACEHOLDER_COLOR, TEXT_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import AddButton from './AddButton';
 
 const ActiveWorkday = props => {
 
@@ -31,6 +32,7 @@ const ActiveWorkday = props => {
                 renderItem={({item}) => <Item props={item}/>}
                 keyExtractor={item => item.id}
             />
+            <AddButton onAddPress={() => navigation.navigate('ItemFormModal')}/>
         </SafeAreaView>
     );
 }
