@@ -10,15 +10,18 @@ const TodayScreen = ({navigation}) => {
     const isFocused = useIsFocused();
 
     const [newWorkday, setIsNewWorkday] = React.useState(true);
+    const [workdayId, setWorkdayId] = React.useState();
     const [productions, setProductions] = React.useState([]);
 
     React.useEffect(() => {
         const id = getNotClosedDayId();
         if (id) {
+            setWorkdayId(id);
             setProductions(loadWorkdayById(id));
             setIsNewWorkday(false);
             navigation.setOptions({
-                headerRight: () => <FinishButton onAddPress={() => {}}></FinishButton>,
+                headerRight: () => <FinishButton onAddPress={() => {
+                }}></FinishButton>,
             });
         } else {
             setIsNewWorkday(true);
@@ -32,7 +35,7 @@ const TodayScreen = ({navigation}) => {
 
     const loadWorkdayById = (id) => {
         return db.getAllSync(`
-            SELECT w.id, n.name, COUNT(n.name) as count, SUM(n.price) as sum
+            SELECT n.id, n.name, COUNT(n.name) as count, SUM(n.price) as sum
             FROM workday w
                 JOIN production p
             ON w.id = p.workday_id
@@ -49,7 +52,7 @@ const TodayScreen = ({navigation}) => {
         );
     }
 
-    return <ActiveWorkday productions={productions}/>;
+    return <ActiveWorkday productions={productions} workdayId={workdayId}/>;
 };
 
 export default TodayScreen;

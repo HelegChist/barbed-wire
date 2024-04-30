@@ -1,9 +1,10 @@
 import React from 'react';
-import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, PLACEHOLDER_COLOR, TEXT_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AddButton from './AddButton';
 import SlideModal from './SlideModal';
+import { AddNewProduct } from './AddNewProduct';
 
 const ActiveWorkday = props => {
 
@@ -38,10 +39,8 @@ const ActiveWorkday = props => {
                 />
                 <AddButton onAddPress={() => setOpenModal(true)}/>
             </View>
-
             <SlideModal visible={openModal} setVisible={setOpenModal}>
-                <FlatList data={} renderItem={}
-                />
+                <AddNewProduct workdayId={props.workdayId}/>
             </SlideModal>
         </>
 
@@ -51,52 +50,34 @@ const ActiveWorkday = props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop:
-            StatusBar.currentHeight || 0,
-        marginLeft:
-            8,
-        marginRight:
-            8
-    }
-    ,
+        marginTop: StatusBar.currentHeight || 0,
+        marginLeft: 8,
+        marginRight: 8
+    },
     item: {
         flex: 1,
-        flexDirection:
-            'row',
+        flexDirection: 'row',
         backgroundColor:
         ITEM_BACKGROUND_COLOR,
-        borderWidth:
-            1,
+        borderWidth: 1,
         borderColor:
         BORDER_COLOR,
-        padding:
-            20,
-        marginVertical:
-            8,
-        borderRadius:
-            8,
-    }
-    ,
+        padding: 20,
+        marginVertical: 8,
+        borderRadius: 8,
+    },
     title: {
         color: TEXT_COLOR,
-        fontSize:
-            18,
-    }
-    ,
+        fontSize: 18,
+    },
     count: {
         marginLeft: 12,
-        marginRight:
-            12,
-        textAlign:
-            'center',
-        justifyContent:
-            'center',
-        color:
-        TEXT_COLOR,
-        fontSize:
-            32,
-    }
-    ,
+        marginRight: 12,
+        textAlign: 'center',
+        justifyContent: 'center',
+        color: TEXT_COLOR,
+        fontSize: 32,
+    },
 });
 
 export default ActiveWorkday;

@@ -13,6 +13,7 @@ import React from 'react';
 import { useSQLiteContext } from 'expo-sqlite/next';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AddButton from '../components/AddButton';
+import { GET_ALL_NOMENCLATURES } from '../utils/sqlQueries';
 
 const SettingScreen = ({navigation}) => {
     DeviceEventEmitter.addListener("event.updateBd", () => getData());
@@ -25,7 +26,7 @@ const SettingScreen = ({navigation}) => {
     }, [db]);
 
     async function getData() {
-        const result = await db.getAllAsync('SELECT * FROM nomenclature');
+        const result = await db.getAllAsync(GET_ALL_NOMENCLATURES);
         setData(result);
     }
 
