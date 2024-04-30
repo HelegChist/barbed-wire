@@ -1,6 +1,9 @@
 export const GET_ALL_NOMENCLATURES = 'SELECT * FROM nomenclature'
 
 export const GET_ACTIVE_WORKDAY = 'SELECT * FROM workday w WHERE w.end_to IS NULL'
+export const FINISH_ACTIVE_WORKDAY = `UPDATE workday
+                                      SET end_to = date('now')
+                                      WHERE id = ?;`
 
 export const INSERT_PRODUCTION = 'INSERT INTO production (nomenclature_id, workday_id) VALUES (?, ?)'
 export const DELETE_LAST_PRODUCTION = `

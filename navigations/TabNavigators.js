@@ -4,7 +4,6 @@ import TodayScreen from '../screens/TodayScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SettingStack from './SettingStack';
 
-
 const Tab = createBottomTabNavigator();
 
 const TabNavigators = () => {
