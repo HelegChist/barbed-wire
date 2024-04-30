@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { DeviceEventEmitter, FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, PLACEHOLDER_COLOR, TEXT_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AddButton from './AddButton';
@@ -9,6 +9,11 @@ import { AddNewProduct } from './AddNewProduct';
 const ActiveWorkday = props => {
 
     const [openModal, setOpenModal] = React.useState(false)
+
+    const recalculate = () => {
+        DeviceEventEmitter.emit("event.recalculateWorkday");
+        setOpenModal(false);
+    }
 
     const Item = ({props}) => (
         <View style={styles.item}>
@@ -40,7 +45,7 @@ const ActiveWorkday = props => {
                 <AddButton onAddPress={() => setOpenModal(true)}/>
             </View>
             <SlideModal visible={openModal} setVisible={setOpenModal}>
-                <AddNewProduct workdayId={props.workdayId}/>
+                <AddNewProduct workdayId={props.workdayId} callback={recalculate}/>
             </SlideModal>
         </>
 

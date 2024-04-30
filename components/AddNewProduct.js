@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite/next';
-import { GET_ALL_NOMENCLATURES } from '../utils/sqlQueries';
+import { GET_ALL_NOMENCLATURES, INSERT_PRODUCTION } from '../utils/sqlQueries';
 import { BORDER_COLOR, ITEM_BACKGROUND_COLOR } from '../constants/Color';
 
 export const AddNewProduct = props => {
@@ -12,7 +12,8 @@ export const AddNewProduct = props => {
     }
 
     const insertProduct = (nomenclatureId) => {
-        db.runSync('INSERT INTO production (nomenclature_id, workday_id) VALUES (?, ?)', nomenclatureId, props.workdayId);
+        db.runSync(INSERT_PRODUCTION, nomenclatureId, props.workdayId);
+        props.callback();
     }
 
     const Item = ({props}) => (

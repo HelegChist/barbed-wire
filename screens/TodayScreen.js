@@ -1,11 +1,14 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { DeviceEventEmitter, Text, View } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite/next';
 import { useIsFocused } from '@react-navigation/native';
 import ActiveWorkday from '../components/ActiveWorkday';
 import FinishButton from '../components/FinishButton';
 
 const TodayScreen = ({navigation}) => {
+    DeviceEventEmitter.addListener("event.recalculateWorkday",
+        () => setProductions(loadWorkdayById(workdayId)));
+
     const db = useSQLiteContext();
     const isFocused = useIsFocused();
 
