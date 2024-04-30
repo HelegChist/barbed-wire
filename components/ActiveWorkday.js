@@ -6,7 +6,7 @@ import AddButton from './AddButton';
 import SlideModal from './SlideModal';
 import { AddNewProduct } from './AddNewProduct';
 import { useSQLiteContext } from 'expo-sqlite/next';
-import { DELETE_LAST_PRODUCTION, INSERT_PRODUCTION } from '../utils/sqlQueries';
+import { DELETE_LAST_PRODUCTION, GET_ALL_NOMENCLATURES, INSERT_PRODUCTION } from '../utils/sqlQueries';
 
 const ActiveWorkday = props => {
     const db = useSQLiteContext();
@@ -52,7 +52,9 @@ const ActiveWorkday = props => {
                 <AddButton onAddPress={() => setOpenModal(true)}/>
             </View>
             <SlideModal visible={openModal} setVisible={setOpenModal}>
-                <AddNewProduct workdayId={props.workdayId} callback={addProduct}/>
+                <AddNewProduct data={db.getAllSync(GET_ALL_NOMENCLATURES)}
+                               workdayId={props.workdayId}
+                               callback={addProduct}/>
             </SlideModal>
         </>
 
