@@ -12,14 +12,10 @@ const ActiveWorkday = props => {
     const db = useSQLiteContext();
     const [openModal, setOpenModal] = React.useState(false)
 
-    const recalculate = () => {
-        DeviceEventEmitter.emit("event.recalculateWorkday");
-        setOpenModal(false);
-    }
-
     const addProduct = (nomenclatureId) => {
         db.runSync(INSERT_PRODUCTION, nomenclatureId, props.workdayId);
         DeviceEventEmitter.emit("event.recalculateWorkday");
+        setOpenModal(false);
     }
 
     const removeProduct = (nomenclatureId) => {
@@ -56,7 +52,7 @@ const ActiveWorkday = props => {
                 <AddButton onAddPress={() => setOpenModal(true)}/>
             </View>
             <SlideModal visible={openModal} setVisible={setOpenModal}>
-                <AddNewProduct workdayId={props.workdayId} callback={recalculate}/>
+                <AddNewProduct workdayId={props.workdayId} callback={addProduct}/>
             </SlideModal>
         </>
 

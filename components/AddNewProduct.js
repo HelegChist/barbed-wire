@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite/next';
 import { GET_ALL_NOMENCLATURES, INSERT_PRODUCTION } from '../utils/sqlQueries';
 import { BORDER_COLOR, ITEM_BACKGROUND_COLOR } from '../constants/Color';
@@ -11,16 +11,11 @@ export const AddNewProduct = props => {
         return db.getAllSync(GET_ALL_NOMENCLATURES)
     }
 
-    const insertProduct = (nomenclatureId) => {
-        db.runSync(INSERT_PRODUCTION, nomenclatureId, props.workdayId);
-        props.callback();
-    }
-
-    const Item = ({props}) => (
-        <TouchableOpacity style={styles.item} onPress={() => insertProduct(props.id)}>
+    const Item = ({id, price, name}) => (
+        <TouchableOpacity style={styles.item} onPress={() => props.callback(id)}>
             <View>
-                <Text style={styles.title}>{props.name}</Text>
-                <Text style={styles.price}>{props.price}</Text>
+                <Text style={styles.title}>{name}</Text>
+                <Text style={styles.price}>{price}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -29,7 +24,9 @@ export const AddNewProduct = props => {
     return (
         <View style={styles.container}>
             <FlatList data={getNomenclatures()}
-                      renderItem={({item}) => <Item props={item}/>}
+                      renderItem={({item}) =>
+                          <Item id={item.id} price={item.price} name={item.name}/>
+                      }
                       keyExtractor={item => item.id}/>
         </View>
     );
