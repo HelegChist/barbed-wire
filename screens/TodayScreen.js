@@ -22,14 +22,22 @@ const TodayScreen = ({navigation}) => {
             setWorkdayId(id);
             setProductions(loadWorkdayById(id));
             setIsNewWorkday(false);
-            navigation.setOptions({
-                headerRight: () => <FinishButton onAddPress={() => {
-                }}></FinishButton>,
-            });
+
         } else {
             setIsNewWorkday(true);
         }
     }, [isFocused]);
+
+    React.useEffect(() => {
+        const sum = productions.map(product => product.sum).reduce((accumulator, currentValue) => {
+            return accumulator + currentValue
+        }, 0);
+        navigation.setOptions({
+            title: "Итог: " + sum,
+            headerRight: () => <FinishButton onAddPress={() => {
+            }}></FinishButton>,
+        });
+    }, [productions])
 
     const getNotClosedDayId = () => {
         let firstSync = db.getFirstSync('SELECT * FROM workday w WHERE w.end_to IS NULL');
