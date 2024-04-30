@@ -3,8 +3,11 @@ import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, 
 import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, PLACEHOLDER_COLOR, TEXT_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AddButton from './AddButton';
+import AddNewProductModal from './AddNewProductModal';
 
 const ActiveWorkday = props => {
+
+    const [openModal, setOpenModal] = React.useState(false)
 
     const Item = ({props}) => (
         <View style={styles.item}>
@@ -32,7 +35,10 @@ const ActiveWorkday = props => {
                 renderItem={({item}) => <Item props={item}/>}
                 keyExtractor={item => item.id}
             />
-            <AddButton onAddPress={() => navigation.navigate('ItemFormModal')}/>
+            <AddButton onAddPress={() => setOpenModal(true)}/>
+            <AddNewProductModal visible={openModal} setVisible={setOpenModal}>
+                <Text>Привет</Text>
+            </AddNewProductModal>
         </SafeAreaView>
     );
 }
@@ -42,7 +48,7 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: StatusBar.currentHeight || 0,
         marginLeft: 8,
-        marginRight: 8,
+        marginRight: 8
     },
     item: {
         flex: 1,

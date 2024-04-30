@@ -1,15 +1,13 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite/next';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import ActiveWorkday from '../components/ActiveWorkday';
 import FinishButton from '../components/FinishButton';
 
-const TodayScreen = () => {
+const TodayScreen = ({navigation}) => {
     const db = useSQLiteContext();
     const isFocused = useIsFocused();
-    const nav = useNavigation();
-
 
     const [newWorkday, setIsNewWorkday] = React.useState(true);
     const [productions, setProductions] = React.useState([]);
@@ -19,7 +17,7 @@ const TodayScreen = () => {
         if (id) {
             setProductions(loadWorkdayById(id));
             setIsNewWorkday(false);
-            nav.setOptions({
+            navigation.setOptions({
                 headerRight: () => <FinishButton onAddPress={() => {}}></FinishButton>,
             });
         } else {
