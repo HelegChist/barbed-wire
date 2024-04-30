@@ -1,9 +1,9 @@
 import React from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { BACKGROUND_COLOR, PLACEHOLDER_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { BACKGROUND_COLOR, PLACEHOLDER_COLOR } from '../constants/Color';
 
-const AddNewProductModal = props => {
+const SlideModal = props => {
 
     return (
         <Modal animationType="slide" transparent={true} visible={props.visible}>
@@ -14,9 +14,9 @@ const AddNewProductModal = props => {
                             <Ionicons name="close-circle-outline" size={40} color={PLACEHOLDER_COLOR}/>
                         </TouchableOpacity>
                     </View>
-                    <View>
+                    <>
                         {props.children}
-                    </View>
+                    </>
                 </View>
             </View>
         </Modal>
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AddNewProductModal;
+export default SlideModal;
