@@ -1,10 +1,11 @@
 import React from 'react';
-import { DeviceEventEmitter, Text, View } from 'react-native';
+import { DeviceEventEmitter } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite/next';
 import { useIsFocused } from '@react-navigation/native';
 import ActiveWorkday from '../components/ActiveWorkday';
 import FinishButton from '../components/FinishButton';
 import { FINISH_ACTIVE_WORKDAY, GET_ACTIVE_WORKDAY, GET_PRODUCTION } from '../utils/sqlQueries';
+import WorkdayHistory from '../components/WorkdayHistory';
 
 const TodayScreen = ({navigation}) => {
     DeviceEventEmitter.addListener("event.recalculateWorkday",
@@ -65,11 +66,7 @@ const TodayScreen = ({navigation}) => {
     }
 
     if (newWorkday) {
-        return (
-            <View>
-                <Text>Создать новый день</Text>
-            </View>
-        );
+        return <WorkdayHistory/>
     }
     return <ActiveWorkday productions={productions} workdayId={workdayId}/>;
 };
