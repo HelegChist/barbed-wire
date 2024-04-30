@@ -4,6 +4,7 @@ import { useSQLiteContext } from 'expo-sqlite/next';
 import { useIsFocused } from '@react-navigation/native';
 import ActiveWorkday from '../components/ActiveWorkday';
 import FinishButton from '../components/FinishButton';
+import { GET_ACTIVE_WORKDAY, GET_PRODUCTION } from '../utils/sqlQueries';
 
 const TodayScreen = ({navigation}) => {
     DeviceEventEmitter.addListener("event.recalculateWorkday",
@@ -22,7 +23,6 @@ const TodayScreen = ({navigation}) => {
             setWorkdayId(id);
             setProductions(loadWorkdayById(id));
             setIsNewWorkday(false);
-
         } else {
             setIsNewWorkday(true);
         }
@@ -34,25 +34,17 @@ const TodayScreen = ({navigation}) => {
         }, 0);
         navigation.setOptions({
             title: "Итог: " + sum,
-            headerRight: () => <FinishButton onAddPress={() => {
-            }}></FinishButton>,
+            headerRight: () => <FinishButton onAddPress={() => {}}></FinishButton>,
         });
     }, [productions])
 
     const getNotClosedDayId = () => {
-        let firstSync = db.getFirstSync('SELECT * FROM workday w WHERE w.end_to IS NULL');
+        let firstSync = db.getFirstSync(GET_ACTIVE_WORKDAY);
         return firstSync.id;
     }
 
     const loadWorkdayById = (id) => {
-        return db.getAllSync(`
-            SELECT n.id, n.name, COUNT(n.name) as count, SUM(n.price) as sum
-            FROM workday w
-                JOIN production p
-            ON w.id = p.workday_id
-                JOIN nomenclature n ON n.id = p.nomenclature_id
-            WHERE w.id = ?
-            GROUP BY p.nomenclature_id;`, id);
+        return db.getAllSync(GET_PRODUCTION, id);
     }
 
     if (newWorkday) {
@@ -62,7 +54,6 @@ const TodayScreen = ({navigation}) => {
             </View>
         );
     }
-
     return <ActiveWorkday productions={productions} workdayId={workdayId}/>;
 };
 

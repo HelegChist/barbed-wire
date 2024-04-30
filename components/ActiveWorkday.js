@@ -5,9 +5,11 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import AddButton from './AddButton';
 import SlideModal from './SlideModal';
 import { AddNewProduct } from './AddNewProduct';
+import { useSQLiteContext } from 'expo-sqlite/next';
+import { DELETE_LAST_PRODUCTION, INSERT_PRODUCTION } from '../utils/sqlQueries';
 
 const ActiveWorkday = props => {
-
+    const db = useSQLiteContext();
     const [openModal, setOpenModal] = React.useState(false)
 
     const recalculate = () => {
@@ -15,18 +17,27 @@ const ActiveWorkday = props => {
         setOpenModal(false);
     }
 
+    const addProduct = (nomenclatureId) => {
+        db.runSync(INSERT_PRODUCTION, nomenclatureId, props.workdayId);
+        DeviceEventEmitter.emit("event.recalculateWorkday");
+    }
+
+    const removeProduct = (nomenclatureId) => {
+        db.runSync(DELETE_LAST_PRODUCTION, nomenclatureId, props.workdayId);
+        DeviceEventEmitter.emit("event.recalculateWorkday");
+    }
+
     const Item = ({props}) => (
         <View style={styles.item}>
             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={styles.title}>{props.name}</Text>
                 <View style={{flexDirection: 'row'}}>
-                    <TouchableOpacity style={{justifyContent: 'center'}}>
+                    <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => removeProduct(props.id)}>
                         <Ionicons name="remove-circle-outline" size={32}
                                   color={PLACEHOLDER_COLOR}/>
                     </TouchableOpacity>
                     <Text style={styles.count}>{props.count}</Text>
-                    <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => {
-                    }}>
+                    <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => addProduct(props.id)}>
                         <Ionicons name="add-circle-outline" size={32} color={PLACEHOLDER_COLOR}/>
                     </TouchableOpacity>
                 </View>
