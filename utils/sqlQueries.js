@@ -1,15 +1,14 @@
 export const GET_ALL_NOMENCLATURES = 'SELECT * FROM nomenclature'
 
+export const INSERT_WORKDAY = `INSERT INTO workday (start_at, end_to)
+                               VALUES (datetime('now'), null);`
 export const GET_ALL_WORKDAY = `
     SELECT w.start_at as startTo, w.end_to as endTo, SUM(n.price) as total
     FROM workday w
              JOIN production p ON p.workday_id = w.id
              JOIN nomenclature n ON p.nomenclature_id = n.id
     GROUP BY w.id
-    ORDER BY w.start_at DESC
-`;
-
-
+    ORDER BY w.start_at ASC`;
 export const GET_ACTIVE_WORKDAY = 'SELECT * FROM workday w WHERE w.end_to IS NULL'
 export const FINISH_ACTIVE_WORKDAY = `UPDATE workday
                                       SET end_to = datetime('now')

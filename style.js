@@ -1,4 +1,4 @@
-import { StatusBar, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, TEXT_COLOR } from './constants/Color';
 
 export const listStyle = StyleSheet.create({
@@ -22,5 +22,11 @@ export const textStyle = StyleSheet.create({
     item: {
         color: TEXT_COLOR,
         fontSize: 18
+    },
+    header: {
+        color: TEXT_COLOR,
+        fontSize: 32,
+        fontWeight: '700',
+        textAlign: 'center',
     }
 });
