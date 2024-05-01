@@ -34,7 +34,7 @@ const TodayScreen = ({navigation}) => {
                 headerRight: () => null,
             });
         }
-    }, [isFocused]);
+    }, [isFocused, workdayId]);
 
     React.useEffect(() => {
         if (!productions) {
@@ -66,7 +66,7 @@ const TodayScreen = ({navigation}) => {
     }
 
     if (newWorkday) {
-        return <WorkdayHistory/>
+        return <WorkdayHistory setWorkdayId={setWorkdayId}/>
     }
     return <ActiveWorkday productions={productions} workdayId={workdayId}/>;
 };

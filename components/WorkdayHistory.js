@@ -8,7 +8,7 @@ import AddButton from './AddButton';
 import SlideModal from './SlideModal';
 import StartButton from './StartButton';
 
-const WorkdayHistory = () => {
+const WorkdayHistory = ({setWorkdayId}) => {
     const db = useSQLiteContext();
     const [history, setHistory] = React.useState([])
     const [openModal, setOpenModal] = React.useState(false)
@@ -22,9 +22,10 @@ const WorkdayHistory = () => {
     }
 
     const insertWorkload = () => {
-        db.runSync(INSERT_WORKDAY);
+        const workload   = db.runSync(INSERT_WORKDAY);
         DeviceEventEmitter.emit("event.recalculateWorkday");
         setOpenModal(false);
+        setWorkdayId(workload.id);
     }
 
     const Item = ({props}) => (
