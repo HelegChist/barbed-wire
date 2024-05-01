@@ -1,8 +1,9 @@
 import React from 'react';
-import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite/next';
 import { GET_ALL_WORKDAY } from '../utils/sqlQueries';
-import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, PLACEHOLDER_COLOR, TEXT_COLOR } from '../constants/Color';
+import { listStyle, textStyle } from '../style';
+import { ACTIVE_COLOR } from '../constants/Color';
 
 const WorkdayHistory = props => {
     const db = useSQLiteContext();
@@ -17,42 +18,32 @@ const WorkdayHistory = props => {
     }
 
     const Item = ({props}) => (
-        <View style={styles.item}>
+        <View style={listStyle.item}>
             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text>{props.startTo}</Text>
-                <Text>{props.endTo}</Text>
-                <Text>{props.total}</Text>
+                <View>
+                    <Text style={textStyle.item}>С {props.startTo}</Text>
+                    <Text style={textStyle.item}>По {props.endTo}</Text>
+                </View>
+                <View>
+                    <Text style={textStyle.item}>Итог: </Text>
+                    <Text style={{color: ACTIVE_COLOR, fontSize: 24, textAlignVertical: 'center'}}>{props.total}</Text>
+                </View>
+
             </View>
         </View>
+
     );
 
     return (
         <>
-            <FlatList data={history} renderItem={({item}) => <Item props={item}/>}/>
+            <FlatList style={listStyle.container}
+                      data={history}
+                      renderItem={({item}) => <Item props={item}/>}/>
         </>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: StatusBar.currentHeight || 0,
-        marginLeft: 8,
-        marginRight: 8
-    },
-    item: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor:
-        ITEM_BACKGROUND_COLOR,
-        borderWidth: 1,
-        borderColor:
-        BORDER_COLOR,
-        padding: 20,
-        marginVertical: 8,
-        borderRadius: 8,
-    }
-});
+const styles = StyleSheet.create({});
 
 
 export default WorkdayHistory;
