@@ -2,6 +2,7 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SettingScreen from '../screens/SettingScreen';
 import ItemFormModal from '../screens/ItemFormModal';
+import NomenclatureSettingScreen from '../screens/NomenclatureSettingScreen';
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,9 @@ const SettingStack = () => {
                          }}>
             <Stack.Group>
                 <Stack.Screen name="SettingScreen" component={SettingScreen}/>
+            </Stack.Group>
+            <Stack.Group screenOptions={{presentation: 'modal'}}>
+                <Stack.Screen name="NomenclatureSettingModal" component={NomenclatureSettingScreen}/>
             </Stack.Group>
             <Stack.Group screenOptions={{presentation: 'modal'}}>
                 <Stack.Screen name="ItemFormModal" component={ItemFormModal}/>

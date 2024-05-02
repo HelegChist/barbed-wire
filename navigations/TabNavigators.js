@@ -21,7 +21,7 @@ const TabNavigators = () => {
                     if (route.name === 'Production') {
                         iconName = 'man-sharp';
                     } else if (route.name === 'Settings') {
-                        iconName = 'settings';
+                        iconName = 'list-outline';
                     }
                     return <Ionicons name={iconName} size={size} color={color}/>;
                 },
