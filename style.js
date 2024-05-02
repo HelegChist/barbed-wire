@@ -8,6 +8,7 @@ export const listStyle = StyleSheet.create({
         marginRight: 8
     },
     item: {
+        flexDirection: "row",
         flex: 1,
         backgroundColor: ITEM_BACKGROUND_COLOR,
         borderWidth: 1,
@@ -26,7 +27,6 @@ export const textStyle = StyleSheet.create({
     header: {
         color: TEXT_COLOR,
         fontSize: 32,
-        fontWeight: '700',
-        textAlign: 'center',
+        fontWeight: '700'
     }
 });

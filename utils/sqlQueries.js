@@ -1,4 +1,6 @@
-export const GET_ALL_NOMENCLATURES = 'SELECT * FROM nomenclature'
+export const GET_ALL_NOMENCLATURES = 'SELECT * FROM nomenclature WHERE disable = 0;'
+export const INSERT_NOMENCLATURES = 'INSERT INTO nomenclature (NAME, PRICE) VALUES (?, ?);'
+export const DELETE_NOMENCLATURES = 'UPDATE nomenclature SET disable = 1 WHERE id = ?;'
 
 export const INSERT_WORKDAY = `INSERT INTO workday (start_at, end_to)
                                VALUES (datetime('now'), null);`
