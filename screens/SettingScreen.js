@@ -1,31 +1,28 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { COLOR, PALE_ACTIVE_COLOR, PLACEHOLDER_COLOR, TEXT_COLOR } from '../constants/Color';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { COLOR, TEXT_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const SettingsScreen = ({navigation}) => {
 
     return (
-        <View style={style.container}>
-            <TouchableOpacity style={{flexDirection: 'row', alignSelf: 'stretch', alignContent: 'space-between'}}>
-                <Ionicons
-                    name="receipt-outline"
-                    size={50}
-                    color={COLOR}/>
-                <View style={{flexDirection: 'row'}}>
-                    <View style={{justifyContent: 'center', paddingLeft: 12}}>
-                        <Text style={style.text}>Vertically Centered Text</Text>
-                    </View>
-                    <View style={{justifyContent: 'center'}}>
-                        <Ionicons name="chevron-forward-outline" size={32} color={TEXT_COLOR}/>
-                    </View>
+        <>
+            <TouchableOpacity style={style.container} onPress={() => navigation.navigate('NomenclatureSettingScreen')}>
+                <Ionicons name="receipt-outline" size={50} color={COLOR}/>
+                <View style={{paddingLeft: 12}}>
+                    <Text style={style.text}>Номенклатура</Text>
+                    <Text style={style.description}>Список изготавливаемой продукции</Text>
                 </View>
-
-
-
-
             </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={style.container}>
+                <Ionicons name="trending-up-outline" size={50} color={COLOR}/>
+                <View style={{paddingLeft: 12}}>
+                    <Text style={style.text}>Коэффициенты</Text>
+                    <Text style={style.description}>Надбавки к зарплате</Text>
+                </View>
+            </TouchableOpacity>
+        </>
+
     );
 };
 
@@ -33,7 +30,10 @@ export default SettingsScreen;
 
 export const style = StyleSheet.create({
     container: {
-        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignContent: 'space-between',
+        padding: 12
     },
     row: {
         flexDirection: 'row',
@@ -41,6 +41,13 @@ export const style = StyleSheet.create({
     },
     text: {
         fontSize: 20,
+        fontWeight: '600',
+        color: TEXT_COLOR,
+        letterSpacing: 3,
+    },
+    description: {
+        fontSize: 12,
+        fontWeight: '200',
         color: TEXT_COLOR,
     }
 });
