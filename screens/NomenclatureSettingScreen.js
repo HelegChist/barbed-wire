@@ -39,16 +39,18 @@ const NomenclatureSettingScreen = ({navigation}) => {
     };
 
     const Item = ({props}) => (
-        <View style={listStyle.item}>
+        <View style={{...listStyle.item, justifyContent: 'space-between'}}>
             <View>
                 <Text style={textStyle.item}>{props.name}</Text>
                 <Text style={textStyle.header}>{props.price}</Text>
             </View>
-            <TouchableOpacity
-                onPress={() => deleteNomenclature(props.id)}
-                style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
-                <Ionicons name="trash" size={32} color={PLACEHOLDER_COLOR}/>
-            </TouchableOpacity>
+            <View>
+                <TouchableOpacity
+                    onPress={() => deleteNomenclature(props.id)}
+                    style={{flex: 1, justifyContent: 'center'}}>
+                    <Ionicons name="trash" size={32} color={PLACEHOLDER_COLOR}/>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 
