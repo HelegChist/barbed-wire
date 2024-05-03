@@ -1,5 +1,5 @@
 import { TextInput } from 'react-native';
-import { ACTIVE_COLOR, PLACEHOLDER_COLOR } from '../constants/Color';
+import { ACTIVE_COLOR, PALE_ACTIVE_COLOR } from '../constants/Color';
 import { GlobalStyles } from '../constants/Styles';
 
 const StyleTextInput = props => {
@@ -10,7 +10,7 @@ const StyleTextInput = props => {
             placeholder={props.placeholder}
             onChangeText={props.onChangeText}
             value={props.value}
-            placeholderTextColor={PLACEHOLDER_COLOR}
+            placeholderTextColor={PALE_ACTIVE_COLOR}
             keyboardType={props.keyboardType}
         />
     );

@@ -1,8 +1,10 @@
 import React from 'react';
-import { Button, View, DeviceEventEmitter } from 'react-native';
+import { DeviceEventEmitter, TouchableOpacity, View } from 'react-native';
 import StyleTextInput from '../components/StyleTextInput';
 import { useSQLiteContext } from 'expo-sqlite/next';
 import { INSERT_NOMENCLATURES } from '../utils/sqlQueries';
+import { ACTIVE_COLOR } from '../constants/Color';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const ItemFormModal = ({navigation}) => {
 
@@ -15,18 +17,19 @@ const ItemFormModal = ({navigation}) => {
     }
 
     return (
-        <View style={{flex: 1}}>
-            <StyleTextInput value={name} onChangeText={setName} placeholder="Номенклатура"/>
-            <StyleTextInput value={price} onChangeText={setPrice} placeholder="Цена" keyboardType="numeric"/>
-            <Button
-                title="Добавить"
-                onPress={() => {
-                    insertNomenclature(name, price).then(() => {
-                        DeviceEventEmitter.emit('event.updateBd');
-                        navigation.goBack();
-                    });
-                }}
-            />
+        <View style={{flex: 1, justifyContent: 'space-between'}}>
+            <View>
+                <StyleTextInput value={name} onChangeText={setName} placeholder="Номенклатура"/>
+                <StyleTextInput value={price} onChangeText={setPrice} placeholder="Цена" keyboardType="numeric"/>
+            </View>
+            <TouchableOpacity style={{alignItems: 'center', bottom: 30}} onPress={() => {
+                insertNomenclature(name, price).then(() => {
+                    DeviceEventEmitter.emit('event.updateBd');
+                    navigation.goBack();
+                });
+            }}>
+                <Ionicons name="pencil-outline" size={32} color={ACTIVE_COLOR}/>
+            </TouchableOpacity>
         </View>
     );
 };
