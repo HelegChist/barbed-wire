@@ -2,8 +2,19 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLOR, TEXT_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useFocusEffect } from '@react-navigation/native';
 
 const SettingsScreen = ({navigation}) => {
+
+    useFocusEffect(React.useCallback(() => {
+        const tabNavigator = navigation.getParent();
+        if (tabNavigator) {
+            tabNavigator.setOptions({
+                headerTitle: 'Настройки',
+                headerRight: null
+            });
+        }
+    }, [navigation]));
 
     return (
         <>
