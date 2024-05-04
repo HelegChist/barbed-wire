@@ -1,12 +1,13 @@
 import React from 'react';
-import { DeviceEventEmitter, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import StyleTextInput from '../components/StyleTextInput';
 import { useSQLiteContext } from 'expo-sqlite/next';
-import { INSERT_NOMENCLATURES } from '../utils/sqlQueries';
 import { ACTIVE_COLOR, PALE_ACTIVE_COLOR, PLACEHOLDER_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-const ItemFormModal = ({navigation}) => {
+const ItemFormModal = ({route, navigation}) => {
+
+    const { insertScript } = route.params;
 
     const db = useSQLiteContext();
     const [name, setName] = React.useState('');
@@ -15,7 +16,7 @@ const ItemFormModal = ({navigation}) => {
     const [color2, setColor2] = React.useState(PALE_ACTIVE_COLOR);
 
     async function insertNomenclature(name, price) {
-        await db.runAsync(INSERT_NOMENCLATURES, [name, price]);
+        await db.runAsync(insertScript, [name, price]);
     }
 
     return (
@@ -40,7 +41,6 @@ const ItemFormModal = ({navigation}) => {
                     return;
                 }
                 insertNomenclature(name, price).then(() => {
-                    DeviceEventEmitter.emit('event.updateBd');
                     navigation.goBack();
                 });
             }}>

@@ -1,21 +1,21 @@
 import React from 'react';
-import { DeviceEventEmitter, FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { PLACEHOLDER_COLOR } from '../constants/Color';
 import { useSQLiteContext } from 'expo-sqlite/next';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AddButton from '../components/AddButton';
-import { DELETE_NOMENCLATURES, GET_ALL_NOMENCLATURES } from '../utils/sqlQueries';
+import { DELETE_NOMENCLATURES, GET_ALL_NOMENCLATURES, INSERT_NOMENCLATURES } from '../utils/sqlQueries';
 import { listStyle, textStyle } from '../style';
 import { useFocusEffect } from '@react-navigation/native';
 import BackButton from '../components/BackButton';
 
 const NomenclatureSettingScreen = ({navigation}) => {
-    DeviceEventEmitter.addListener('event.updateBd', () => loadData());
 
     const db = useSQLiteContext();
     const [data, setData] = React.useState([]);
 
     useFocusEffect(React.useCallback(() => {
+        loadData();
         const tabNavigator = navigation.getParent();
         if (tabNavigator) {
             tabNavigator.setOptions({
@@ -24,10 +24,6 @@ const NomenclatureSettingScreen = ({navigation}) => {
             });
         }
     }, [navigation]));
-
-    React.useEffect(() => {
-        loadData();
-    }, [db]);
 
     const loadData = () => {
         setData(db.getAllSync(GET_ALL_NOMENCLATURES));
@@ -61,7 +57,7 @@ const NomenclatureSettingScreen = ({navigation}) => {
                 renderItem={({item}) => <Item props={item}/>}
                 keyExtractor={item => item.id}
             />
-            <AddButton onAddPress={() => navigation.navigate('ItemFormModal')}/>
+            <AddButton onAddPress={() => navigation.navigate('ItemFormModal', {insertScript: INSERT_NOMENCLATURES})}/>
         </SafeAreaView>
     );
 };
