@@ -7,7 +7,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 const ItemFormModal = ({route, navigation}) => {
 
-    const { insertScript } = route.params;
+    const {insertScript, name1, name2} = route.params;
 
     const db = useSQLiteContext();
     const [name, setName] = React.useState('');
@@ -22,8 +22,8 @@ const ItemFormModal = ({route, navigation}) => {
     return (
         <View style={{flex: 1, justifyContent: 'space-between'}}>
             <View>
-                <StyleTextInput value={name} onChangeText={setName} placeholder="Номенклатура" color={color1}/>
-                <StyleTextInput value={price} onChangeText={setPrice} placeholder="Цена" keyboardType="numeric"
+                <StyleTextInput value={name} onChangeText={setName} placeholder={name1} color={color1}/>
+                <StyleTextInput value={price} onChangeText={setPrice} placeholder={name2} keyboardType="numeric"
                                 color={color2}/>
             </View>
             <TouchableOpacity style={{alignItems: 'center', bottom: 30}} onPress={() => {

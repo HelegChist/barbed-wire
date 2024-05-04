@@ -3,7 +3,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLOR, TEXT_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect } from '@react-navigation/native';
-import RatioScreen from './RatioScreen';
 
 const SettingsScreen = ({navigation}) => {
 

@@ -29,3 +29,7 @@ export const GET_PRODUCTION = `
         JOIN nomenclature n ON n.id = p.nomenclature_id
     WHERE w.id = ?
     GROUP BY p.nomenclature_id;`
+
+export const GET_ALL_RATIO = 'SELECT * FROM ratio WHERE disable = 0;'
+export const INSERT_RATIO = 'INSERT INTO ratio (NAME, VALUE) VALUES (?, ?);'
+export const DELETE_RATIO = 'UPDATE ratio SET disable = 1 WHERE id = ?;'

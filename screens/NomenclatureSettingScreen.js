@@ -57,7 +57,12 @@ const NomenclatureSettingScreen = ({navigation}) => {
                 renderItem={({item}) => <Item props={item}/>}
                 keyExtractor={item => item.id}
             />
-            <AddButton onAddPress={() => navigation.navigate('ItemFormModal', {insertScript: INSERT_NOMENCLATURES})}/>
+            <AddButton onAddPress={() => navigation.navigate('ItemFormModal',
+                {
+                    insertScript: INSERT_NOMENCLATURES,
+                    name1: 'Номенклатура',
+                    name2: 'Цена',
+                })}/>
         </SafeAreaView>
     );
 };
