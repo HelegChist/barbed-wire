@@ -10,7 +10,7 @@ const StyleTextInput = props => {
             placeholder={props.placeholder}
             onChangeText={props.onChangeText}
             value={props.value}
-            placeholderTextColor={PALE_ACTIVE_COLOR}
+            placeholderTextColor={props.color}
             keyboardType={props.keyboardType}
         />
     );

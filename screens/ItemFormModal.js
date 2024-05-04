@@ -3,14 +3,16 @@ import { DeviceEventEmitter, TouchableOpacity, View } from 'react-native';
 import StyleTextInput from '../components/StyleTextInput';
 import { useSQLiteContext } from 'expo-sqlite/next';
 import { INSERT_NOMENCLATURES } from '../utils/sqlQueries';
-import { ACTIVE_COLOR } from '../constants/Color';
+import { ACTIVE_COLOR, PALE_ACTIVE_COLOR, PLACEHOLDER_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const ItemFormModal = ({navigation}) => {
 
     const db = useSQLiteContext();
     const [name, setName] = React.useState('');
-    const [price, setPrice] = React.useState();
+    const [price, setPrice] = React.useState('');
+    const [color1, setColor1] = React.useState(PALE_ACTIVE_COLOR);
+    const [color2, setColor2] = React.useState(PALE_ACTIVE_COLOR);
 
     async function insertNomenclature(name, price) {
         await db.runAsync(INSERT_NOMENCLATURES, [name, price]);
@@ -19,10 +21,24 @@ const ItemFormModal = ({navigation}) => {
     return (
         <View style={{flex: 1, justifyContent: 'space-between'}}>
             <View>
-                <StyleTextInput value={name} onChangeText={setName} placeholder="Номенклатура"/>
-                <StyleTextInput value={price} onChangeText={setPrice} placeholder="Цена" keyboardType="numeric"/>
+                <StyleTextInput value={name} onChangeText={setName} placeholder="Номенклатура" color={color1}/>
+                <StyleTextInput value={price} onChangeText={setPrice} placeholder="Цена" keyboardType="numeric"
+                                color={color2}/>
             </View>
             <TouchableOpacity style={{alignItems: 'center', bottom: 30}} onPress={() => {
+                if (name.length === 0 && price.length === 0) {
+                    setColor1(PLACEHOLDER_COLOR);
+                    setColor2(PLACEHOLDER_COLOR);
+                    return;
+                }
+                if (name.length === 0) {
+                    setColor1(PLACEHOLDER_COLOR);
+                    return;
+                }
+                if (price.length === 0) {
+                    setColor2(PLACEHOLDER_COLOR);
+                    return;
+                }
                 insertNomenclature(name, price).then(() => {
                     DeviceEventEmitter.emit('event.updateBd');
                     navigation.goBack();
