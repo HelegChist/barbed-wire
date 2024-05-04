@@ -1,5 +1,5 @@
 import React from 'react';
-import { DeviceEventEmitter, FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, PLACEHOLDER_COLOR, TEXT_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AddButton from './AddButton';
@@ -10,18 +10,18 @@ import { DELETE_LAST_PRODUCTION, GET_ALL_NOMENCLATURES, INSERT_PRODUCTION } from
 
 const ActiveWorkday = props => {
     const db = useSQLiteContext();
-    const [openModal, setOpenModal] = React.useState(false)
+    const [openModal, setOpenModal] = React.useState(false);
 
     const addProduct = (nomenclatureId) => {
-        db.runSync(INSERT_PRODUCTION, nomenclatureId, props.workdayId);
-        DeviceEventEmitter.emit("event.recalculateWorkday");
+        db.runAsync(INSERT_PRODUCTION, nomenclatureId, props.workdayId)
+            .then(() => props.callback());
         setOpenModal(false);
-    }
+    };
 
     const removeProduct = (nomenclatureId) => {
-        db.runSync(DELETE_LAST_PRODUCTION, nomenclatureId, props.workdayId);
-        DeviceEventEmitter.emit("event.recalculateWorkday");
-    }
+        db.runAsync(DELETE_LAST_PRODUCTION, nomenclatureId, props.workdayId)
+            .then(() => props.callback());
+    };
 
     const Item = ({props}) => (
         <View style={styles.item}>
@@ -59,7 +59,7 @@ const ActiveWorkday = props => {
         </>
 
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { DeviceEventEmitter } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite/next';
 import { useIsFocused } from '@react-navigation/native';
 import ActiveWorkday from '../components/ActiveWorkday';
@@ -8,8 +7,6 @@ import { FINISH_ACTIVE_WORKDAY, GET_ACTIVE_WORKDAY, GET_PRODUCTION } from '../ut
 import WorkdayHistory from '../components/WorkdayHistory';
 
 const TodayScreen = ({navigation}) => {
-    DeviceEventEmitter.addListener("event.recalculateWorkday",
-        () => setProductions(loadWorkdayById(workdayId)));
 
     const db = useSQLiteContext();
     const isFocused = useIsFocused();
@@ -17,6 +14,10 @@ const TodayScreen = ({navigation}) => {
     const [newWorkday, setIsNewWorkday] = React.useState(true);
     const [workdayId, setWorkdayId] = React.useState();
     const [productions, setProductions] = React.useState([]);
+
+    const callback = () => {
+        setProductions(loadWorkdayById(workdayId));
+    };
 
     React.useEffect(() => {
         if (!isFocused) {
@@ -47,7 +48,7 @@ const TodayScreen = ({navigation}) => {
             title: "Итог: " + sum,
             headerRight: () => <FinishButton onAddPress={() => finishWorkday()}/>,
         });
-    }, [productions])
+    }, [productions]);
 
     const getNotClosedDayId = () => {
         return db.getFirstSync(GET_ACTIVE_WORKDAY);
@@ -55,7 +56,7 @@ const TodayScreen = ({navigation}) => {
 
     const loadWorkdayById = (id) => {
         return db.getAllSync(GET_PRODUCTION, id);
-    }
+    };
 
     const finishWorkday = () => {
         db.runSync(FINISH_ACTIVE_WORKDAY, workdayId);
@@ -66,9 +67,9 @@ const TodayScreen = ({navigation}) => {
     }
 
     if (newWorkday) {
-        return <WorkdayHistory setWorkdayId={setWorkdayId}/>
+        return <WorkdayHistory setWorkdayId={setWorkdayId}/>;
     }
-    return <ActiveWorkday productions={productions} workdayId={workdayId}/>;
+    return <ActiveWorkday productions={productions} workdayId={workdayId} callback={callback}/>;
 };
 
 export default TodayScreen;
