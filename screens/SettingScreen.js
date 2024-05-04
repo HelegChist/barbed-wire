@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLOR, TEXT_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect } from '@react-navigation/native';
+import RatioScreen from './RatioScreen';
 
 const SettingsScreen = ({navigation}) => {
 
@@ -25,7 +26,7 @@ const SettingsScreen = ({navigation}) => {
                     <Text style={style.description}>Список изготавливаемой продукции</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={style.container}>
+            <TouchableOpacity style={style.container} onPress={() => navigation.navigate('RatioScreen')}>
                 <Ionicons name="trending-up-outline" size={50} color={COLOR}/>
                 <View style={{paddingLeft: 12}}>
                     <Text style={style.text}>Коэффициенты</Text>
