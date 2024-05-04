@@ -2,8 +2,8 @@ export const GET_ALL_NOMENCLATURES = 'SELECT * FROM nomenclature WHERE disable =
 export const INSERT_NOMENCLATURES = 'INSERT INTO nomenclature (NAME, PRICE) VALUES (?, ?);'
 export const DELETE_NOMENCLATURES = 'UPDATE nomenclature SET disable = 1 WHERE id = ?;'
 
-export const INSERT_WORKDAY = `INSERT INTO workday (start_at, end_to)
-                               VALUES (datetime('now'), null);`
+export const INSERT_WORKDAY = `INSERT INTO workday (start_at, end_to, ratio_id)
+                               VALUES (datetime('now'), null, ?);`
 export const GET_ALL_WORKDAY = `
     SELECT w.start_at as startTo, w.end_to as endTo, SUM(n.price) as total
     FROM workday w
