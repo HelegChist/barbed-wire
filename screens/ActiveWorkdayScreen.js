@@ -33,7 +33,7 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
             return;
         }
         parentNavigation.setOptions({
-            title: 'Итог: ' + calculateSum(),
+            title: `Итог${workday.ratio ? ` [x${workday.ratio}]` : ''}: ` + calculateSum(),
             headerRight: () => <FinishButton onAddPress={() => finishWorkday()}/>,
         });
     }, [productions]);
