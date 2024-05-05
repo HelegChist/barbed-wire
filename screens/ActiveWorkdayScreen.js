@@ -31,9 +31,12 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
         if (!productions) {
             return;
         }
-        const sum = productions.map(product => product.sum).reduce((accumulator, currentValue) => {
+        let sum = productions.map(product => product.sum).reduce((accumulator, currentValue) => {
             return accumulator + currentValue;
         }, 0);
+        if (workday.ratio) {
+            sum *= workday.ratio;
+        }
         parentNavigation.setOptions({
             title: 'Итог: ' + sum,
             headerRight: () => <FinishButton onAddPress={() => finishWorkday()}/>,

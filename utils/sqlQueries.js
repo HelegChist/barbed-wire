@@ -11,7 +11,9 @@ export const GET_ALL_WORKDAY = `
              JOIN nomenclature n ON p.nomenclature_id = n.id
     GROUP BY w.id
     ORDER BY w.start_at ASC`;
-export const GET_ACTIVE_WORKDAY = 'SELECT * FROM workday w WHERE w.end_to IS NULL'
+export const GET_ACTIVE_WORKDAY = `SELECT w.id as id, r.value as ratio
+                                   FROM workday w LEFT JOIN ratio r ON w.ratio_id = r.id
+                                   WHERE w.end_to IS NULL`
 export const FINISH_ACTIVE_WORKDAY = `UPDATE workday
                                       SET end_to = datetime('now')
                                       WHERE id = ?;`
