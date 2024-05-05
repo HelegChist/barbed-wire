@@ -5,18 +5,22 @@ export const DELETE_NOMENCLATURES = 'UPDATE nomenclature SET disable = 1 WHERE i
 export const INSERT_WORKDAY = `INSERT INTO workday (start_at, end_to, ratio_id)
                                VALUES (datetime('now'), null, ?);`
 export const GET_ALL_WORKDAY = `
-    SELECT w.start_at as startTo, w.end_to as endTo, SUM(n.price) as total
+    SELECT w.start_at as startTo, w.end_to as endTo, w.result
     FROM workday w
              JOIN production p ON p.workday_id = w.id
              JOIN nomenclature n ON p.nomenclature_id = n.id
     GROUP BY w.id
     ORDER BY w.start_at ASC`;
-export const GET_ACTIVE_WORKDAY = `SELECT w.id as id, r.value as ratio
-                                   FROM workday w LEFT JOIN ratio r ON w.ratio_id = r.id
-                                   WHERE w.end_to IS NULL`
-export const FINISH_ACTIVE_WORKDAY = `UPDATE workday
-                                      SET end_to = datetime('now')
-                                      WHERE id = ?;`
+export const GET_ACTIVE_WORKDAY = `
+    SELECT w.id as id, r.value as ratio
+    FROM workday w
+             LEFT JOIN ratio r ON w.ratio_id = r.id
+    WHERE w.end_to IS NULL`
+export const FINISH_ACTIVE_WORKDAY = `
+    UPDATE workday
+    SET end_to = datetime('now'),
+        result = ?
+    WHERE id = ?;`
 
 export const INSERT_PRODUCTION = 'INSERT INTO production (nomenclature_id, workday_id) VALUES (?, ?)'
 export const DELETE_LAST_PRODUCTION = `

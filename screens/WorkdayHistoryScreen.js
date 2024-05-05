@@ -53,7 +53,7 @@ const WorkdayHistoryScreen = ({navigation, route}) => {
                 </View>
                 <View>
                     <Text style={textStyle.item}>Итог: </Text>
-                    <Text style={{color: ACTIVE_COLOR, fontSize: 24, textAlignVertical: 'center'}}>{props.total}</Text>
+                    <Text style={{color: ACTIVE_COLOR, fontSize: 24, textAlignVertical: 'center'}}>{props.result}</Text>
                 </View>
             </View>
         </View>

@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS workday
     id       INTEGER PRIMARY KEY AUTOINCREMENT,
     start_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL,
     end_to   TEXT,
-    ratio_id INTEGER REFERENCES workday (id)
+    ratio_id INTEGER REFERENCES workday (id),
+    result   INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS ratio
@@ -46,9 +47,9 @@ INSERT INTO ratio (id, start_at, name, value, disable)
 VALUES (1, '2024-04-12 12:14:46', 'Ночная смена', 1.5, 0),
        (2, '2024-04-12 12:14:46', 'Праздничная смена', 1.5, 1);
 
-INSERT INTO workday (id, start_at, end_to, ratio_id)
-VALUES (1, '2024-04-12 12:14:46', '2024-04-12 21:04:33', 1),
-       (2, '2024-04-13 08:22:00', null, null);
+INSERT INTO workday (id, start_at, end_to, ratio_id, result)
+VALUES (1, '2024-04-12 12:14:46', '2024-04-12 21:04:33', 1, 1350),
+       (2, '2024-04-13 08:22:00', null, 1, null);
 
 INSERT INTO production (id, created_at, nomenclature_id, workday_id)
 VALUES (1, '2024-04-12 13:00:00', 1, 1),

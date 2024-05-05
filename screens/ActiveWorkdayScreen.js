@@ -31,17 +31,21 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
         if (!productions) {
             return;
         }
+        parentNavigation.setOptions({
+            title: 'Итог: ' + calculateSum(),
+            headerRight: () => <FinishButton onAddPress={() => finishWorkday()}/>,
+        });
+    }, [productions]);
+
+    const calculateSum = () => {
         let sum = productions.map(product => product.sum).reduce((accumulator, currentValue) => {
             return accumulator + currentValue;
         }, 0);
         if (workday.ratio) {
             sum *= workday.ratio;
         }
-        parentNavigation.setOptions({
-            title: 'Итог: ' + sum,
-            headerRight: () => <FinishButton onAddPress={() => finishWorkday()}/>,
-        });
-    }, [productions]);
+        return sum;
+    };
 
     const loadWorkdayById = () => {
         return setProductions(db.getAllSync(GET_PRODUCTION, workday.id));
@@ -59,7 +63,7 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
     };
 
     const finishWorkday = () => {
-        db.runAsync(FINISH_ACTIVE_WORKDAY, workday.id)
+        db.runAsync(FINISH_ACTIVE_WORKDAY, calculateSum(), workday.id)
             .then(() => {
                 navigation.goBack();
             });
