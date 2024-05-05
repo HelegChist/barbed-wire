@@ -33,7 +33,7 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
             return;
         }
         parentNavigation.setOptions({
-            title: `Итог${workday.ratio ? ` [x${workday.ratio}]` : ''}: ` + calculateSum(),
+            headerTitle: `Итог${workday.ratio ? ` [x${workday.ratio}]` : ''}: ` + calculateSum(),
             headerRight: () => <FinishButton onAddPress={() => finishWorkday()}/>,
         });
     }, [productions]);
@@ -83,15 +83,19 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
                         }
                     </View>
                 </View>
-                <View style={{flexDirection: 'row'}}>
-                    <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => removeProduct(props.id)}>
-                        <Ionicons name="remove-circle-outline" size={32}
-                                  color={PLACEHOLDER_COLOR}/>
-                    </TouchableOpacity>
-                    <Text style={styles.count}>{props.count}</Text>
-                    <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => addProduct(props.id)}>
-                        <Ionicons name="add-circle-outline" size={32} color={PLACEHOLDER_COLOR}/>
-                    </TouchableOpacity>
+                <View>
+                    <View style={{flexDirection: 'row'}}>
+                        <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => removeProduct(props.id)}>
+                            <Ionicons name="remove-circle-outline" size={32}
+                                      color={PLACEHOLDER_COLOR}/>
+                        </TouchableOpacity>
+                        <Text style={styles.count}>{props.count}</Text>
+                        <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => addProduct(props.id)}>
+                            <Ionicons name="add-circle-outline" size={32} color={PLACEHOLDER_COLOR}/>
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={{flexDirection: 'row', color: TEXT_COLOR}}>На сумму
+                        = {props.sum * (workday.ratio ? workday.ratio : 1)}</Text>
                 </View>
             </View>
         </View>

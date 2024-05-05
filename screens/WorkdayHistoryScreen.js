@@ -20,7 +20,7 @@ const WorkdayHistoryScreen = ({navigation, route}) => {
         loadAllDay().then(workdays => {
             setHistory(workdays);
             parentNavigation.setOptions({
-                title: 'Рабочий период',
+                headerTitle: 'Рабочий период',
                 headerRight: () => null,
             });
         });
