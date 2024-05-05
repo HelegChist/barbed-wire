@@ -28,7 +28,7 @@ export const DELETE_LAST_PRODUCTION = `
     FROM production
     WHERE id = (SELECT MAX(p.id) FROM production p WHERE p.nomenclature_id = ? AND p.workday_id = ?);`
 export const GET_PRODUCTION = `
-    SELECT n.id, n.name, COUNT(n.name) as count, SUM(n.price) as sum
+    SELECT n.id, n.name, COUNT(n.name) as count, SUM(n.price) as sum, n.price as price
     FROM workday w
         JOIN production p
     ON w.id = p.workday_id

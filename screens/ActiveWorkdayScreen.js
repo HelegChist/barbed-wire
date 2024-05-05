@@ -1,6 +1,6 @@
 import React from 'react';
-import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, PLACEHOLDER_COLOR, TEXT_COLOR } from '../constants/Color';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { COLOR, PALE_ACTIVE_COLOR, PLACEHOLDER_COLOR, TEXT_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AddButton from '../components/AddButton';
 import SlideModal from '../components/SlideModal';
@@ -73,7 +73,16 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
     const Item = ({props}) => (
         <View style={listStyle.item}>
             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={styles.title}>{props.name}</Text>
+                <View>
+                    <Text style={styles.title}>{props.name}</Text>
+                    <View style={{flex: 1, flexDirection: 'row'}}>
+                        <Text style={workday.ratio ? styles.cross : styles.price}>{props.price}</Text>
+                        {workday.ratio ?
+                            <Text style={styles.price}> {props.price * workday.ratio} </Text> :
+                            ''
+                        }
+                    </View>
+                </View>
                 <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => removeProduct(props.id)}>
                         <Ionicons name="remove-circle-outline" size={32}
@@ -120,6 +129,16 @@ const styles = StyleSheet.create({
         color: TEXT_COLOR,
         fontSize: 32,
     },
+    price: {
+        fontSize: 18,
+        color: COLOR,
+    },
+    cross: {
+        fontSize: 18,
+        color: PALE_ACTIVE_COLOR,
+        textDecorationLine: 'line-through',
+        textDecorationStyle: 'solid'
+    }
 });
 
 export default ActiveWorkdayScreen;
