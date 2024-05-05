@@ -45,7 +45,7 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
         if (workday.ratio) {
             sum *= workday.ratio;
         }
-        return sum;
+        return sum.toFixed(2);
     };
 
     const loadWorkdayById = () => {
@@ -95,7 +95,7 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
                         </TouchableOpacity>
                     </View>
                     <Text style={{flexDirection: 'row', color: TEXT_COLOR}}>На сумму
-                        = {props.sum * (workday.ratio ? workday.ratio : 1)}</Text>
+                        = {(props.sum * (workday.ratio ? workday.ratio : 1)).toFixed(2)}</Text>
                 </View>
             </View>
         </View>

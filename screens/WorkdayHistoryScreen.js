@@ -52,8 +52,8 @@ const WorkdayHistoryScreen = ({navigation, route}) => {
                     <Text style={textStyle.item}>По {props.endTo}</Text>
                 </View>
                 <View>
-                    <Text style={textStyle.item}>Итог: </Text>
-                    <Text style={{color: ACTIVE_COLOR, fontSize: 24, textAlignVertical: 'center'}}>{props.result}</Text>
+                    <Text style={{...textStyle.item, alignSelf: 'flex-end'}}>Итог: </Text>
+                    <Text style={{color: ACTIVE_COLOR, fontSize: 24, textAlignVertical: 'center'}}>{props.result.toFixed(2)}</Text>
                 </View>
             </View>
         </View>
