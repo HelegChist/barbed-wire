@@ -40,7 +40,7 @@ const ItemFormModal = ({route, navigation}) => {
                     setColor2(PLACEHOLDER_COLOR);
                     return;
                 }
-                insertNomenclature(name, price).then(() => {
+                insertNomenclature(name, price.replaceAll(',', '.')).then(() => {
                     navigation.goBack();
                 });
             }}>
