@@ -1,8 +1,8 @@
 import { ACTIVE_COLOR, ITEM_BACKGROUND_COLOR, TEXT_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import TodayScreen from '../screens/TodayScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SettingStack from './SettingStack';
+import WorkdayStack from './WorkdayStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,7 +18,7 @@ const TabNavigators = () => {
                 tabBarIcon: ({focused, color, size}) => {
                     color = focused ? ACTIVE_COLOR : TEXT_COLOR;
                     let iconName;
-                    if (route.name === 'Production') {
+                    if (route.name === 'Workday') {
                         iconName = 'man-sharp';
                     } else if (route.name === 'Settings') {
                         iconName = 'list-outline';
@@ -28,14 +28,14 @@ const TabNavigators = () => {
                 tabBarActiveTintColor: ACTIVE_COLOR,
                 tabBarInactiveTintColor: TEXT_COLOR,
             })}>
-            <Tab.Screen name="Production"
-                        component={TodayScreen}
+            <Tab.Screen name="Workday"
+                        component={WorkdayStack}
                         options={{title: 'Выработка'}}/>
             <Tab.Screen name="Settings"
                         component={SettingStack}
                         options={{title: 'Настройки'}}/>
         </Tab.Navigator>
     );
-}
+};
 
 export default TabNavigators;

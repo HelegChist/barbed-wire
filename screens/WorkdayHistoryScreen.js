@@ -1,25 +1,33 @@
 import React from 'react';
-import { DeviceEventEmitter, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { useSQLiteContext } from 'expo-sqlite/next';
 import { GET_ALL_RATIO, GET_ALL_WORKDAY, INSERT_WORKDAY } from '../utils/sqlQueries';
 import { listStyle, textStyle } from '../style';
 import { ACTIVE_COLOR, COLOR, ITEM_BACKGROUND_COLOR, PALE_ACTIVE_COLOR } from '../constants/Color';
-import AddButton from './AddButton';
-import SlideModal from './SlideModal';
-import StartButton from './StartButton';
+import AddButton from '../components/AddButton';
+import SlideModal from '../components/SlideModal';
+import StartButton from '../components/StartButton';
 
-const WorkdayHistory = ({setWorkdayId}) => {
+const WorkdayHistoryScreen = ({navigation, route}) => {
     const db = useSQLiteContext();
+    const parentNavigation = navigation.getParent();
+
     const [rate, setRate] = React.useState();
     const [history, setHistory] = React.useState([]);
     const [openModal, setOpenModal] = React.useState(false);
 
     React.useEffect(() => {
-        setHistory(loadAllDay());
+        loadAllDay().then(workdays => {
+            setHistory(workdays);
+            parentNavigation.setOptions({
+                title: 'Рабочий период',
+                headerRight: () => null,
+            });
+        });
     }, []);
 
-    const loadAllDay = () => {
-        return db.getAllSync(GET_ALL_WORKDAY);
+    const loadAllDay = async () => {
+        return db.getAllAsync(GET_ALL_WORKDAY);
     };
 
     const loadRate = () => {
@@ -27,19 +35,13 @@ const WorkdayHistory = ({setWorkdayId}) => {
     };
 
     const insertWorkload = () => {
-        const workload = db.runSync(INSERT_WORKDAY, rate);
-        DeviceEventEmitter.emit('event.recalculateWorkday');
-        setOpenModal(false);
-        setWorkdayId(workload.id);
+        db.runAsync(INSERT_WORKDAY, rate).then(() => {
+            navigation.goBack();
+        });
     };
 
     const selectRate = (id) => {
-        if (rate === id) {
-            console.log(rate);
-            setRate(null);
-            return;
-        }
-        setRate(id);
+        rate === id ? setRate(null) : setRate(id);
     };
 
     const HistoryItem = ({props}) => (
@@ -93,7 +95,4 @@ const WorkdayHistory = ({setWorkdayId}) => {
     );
 };
 
-const styles = StyleSheet.create({});
-
-
-export default WorkdayHistory;
+export default WorkdayHistoryScreen;

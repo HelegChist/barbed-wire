@@ -2,25 +2,64 @@ import React from 'react';
 import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { BORDER_COLOR, ITEM_BACKGROUND_COLOR, PLACEHOLDER_COLOR, TEXT_COLOR } from '../constants/Color';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import AddButton from './AddButton';
-import SlideModal from './SlideModal';
-import { AddNewProduct } from './AddNewProduct';
+import AddButton from '../components/AddButton';
+import SlideModal from '../components/SlideModal';
+import { AddNewProduct } from '../components/AddNewProduct';
 import { useSQLiteContext } from 'expo-sqlite/next';
-import { DELETE_LAST_PRODUCTION, GET_ALL_NOMENCLATURES, INSERT_PRODUCTION } from '../utils/sqlQueries';
+import {
+    DELETE_LAST_PRODUCTION,
+    FINISH_ACTIVE_WORKDAY,
+    GET_ALL_NOMENCLATURES,
+    GET_PRODUCTION,
+    INSERT_PRODUCTION
+} from '../utils/sqlQueries';
+import FinishButton from '../components/FinishButton';
 
-const ActiveWorkday = props => {
+const ActiveWorkdayScreen = ({navigation, route}) => {
     const db = useSQLiteContext();
+    const parentNavigation = navigation.getParent();
+
     const [openModal, setOpenModal] = React.useState(false);
+    const {workday} = route.params;
+    const [productions, setProductions] = React.useState([]);
+
+    React.useEffect(() => {
+        loadWorkdayById(workday.id);
+    }, []);
+
+    React.useEffect(() => {
+        if (!productions) {
+            return;
+        }
+        const sum = productions.map(product => product.sum).reduce((accumulator, currentValue) => {
+            return accumulator + currentValue;
+        }, 0);
+        parentNavigation.setOptions({
+            title: 'Итог: ' + sum,
+            headerRight: () => <FinishButton onAddPress={() => finishWorkday()}/>,
+        });
+    }, [productions]);
+
+    const loadWorkdayById = () => {
+        return setProductions(db.getAllSync(GET_PRODUCTION, workday.id));
+    };
 
     const addProduct = (nomenclatureId) => {
-        db.runAsync(INSERT_PRODUCTION, nomenclatureId, props.workday.id)
-            .then(() => props.callback());
+        db.runAsync(INSERT_PRODUCTION, nomenclatureId, workday.id)
+            .then(() => loadWorkdayById());
         setOpenModal(false);
     };
 
     const removeProduct = (nomenclatureId) => {
-        db.runAsync(DELETE_LAST_PRODUCTION, nomenclatureId, props.workday.id)
-            .then(() => props.callback());
+        db.runAsync(DELETE_LAST_PRODUCTION, nomenclatureId, workday.id)
+            .then(() => loadWorkdayById());
+    };
+
+    const finishWorkday = () => {
+        db.runAsync(FINISH_ACTIVE_WORKDAY, workday.id)
+            .then(() => {
+                navigation.goBack();
+            });
     };
 
     const Item = ({props}) => (
@@ -45,7 +84,7 @@ const ActiveWorkday = props => {
         <>
             <View style={styles.container}>
                 <FlatList
-                    data={props.productions}
+                    data={productions}
                     renderItem={({item}) => <Item props={item}/>}
                     keyExtractor={item => item.id}
                 />
@@ -93,4 +132,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ActiveWorkday;
+export default ActiveWorkdayScreen;
