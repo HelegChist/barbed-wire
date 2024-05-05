@@ -84,7 +84,7 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
                     </View>
                 </View>
                 <View>
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
                         <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => removeProduct(props.id)}>
                             <Ionicons name="remove-circle-outline" size={32}
                                       color={PLACEHOLDER_COLOR}/>
@@ -134,11 +134,11 @@ const styles = StyleSheet.create({
         fontSize: 32,
     },
     price: {
-        fontSize: 18,
+        fontSize: 20,
         color: COLOR,
     },
     cross: {
-        fontSize: 18,
+        fontSize: 20,
         color: PALE_ACTIVE_COLOR,
         textDecorationLine: 'line-through',
         textDecorationStyle: 'solid'

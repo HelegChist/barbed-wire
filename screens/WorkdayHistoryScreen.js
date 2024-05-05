@@ -7,6 +7,7 @@ import { ACTIVE_COLOR, COLOR, ITEM_BACKGROUND_COLOR, PALE_ACTIVE_COLOR } from '.
 import AddButton from '../components/AddButton';
 import SlideModal from '../components/SlideModal';
 import StartButton from '../components/StartButton';
+import { formatDataTime, period } from '../utils/DateTimeUtils';
 
 const WorkdayHistoryScreen = ({navigation, route}) => {
     const db = useSQLiteContext();
@@ -47,13 +48,25 @@ const WorkdayHistoryScreen = ({navigation, route}) => {
     const HistoryItem = ({props}) => (
         <View style={listStyle.item}>
             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                <View>
-                    <Text style={textStyle.item}>С {props.startTo}</Text>
-                    <Text style={textStyle.item}>По {props.endTo}</Text>
+                <View style={{flex: 0.7}}>
+                    <Text numberOfLines={1}
+                          adjustsFontSizeToFit={true}
+                          style={textStyle.item}>{formatDataTime(props.startTo)}
+                    </Text>
+                    <Text numberOfLines={1}
+                          adjustsFontSizeToFit={true}
+                          style={textStyle.item}>{period(props.startTo, props.endTo)}</Text>
                 </View>
-                <View>
+                <View style={{flex: 0.3}}>
                     <Text style={{...textStyle.item, alignSelf: 'flex-end'}}>Итог: </Text>
-                    <Text style={{color: ACTIVE_COLOR, fontSize: 24, textAlignVertical: 'center'}}>{props.result.toFixed(2)}</Text>
+                    <Text numberOfLines={1}
+                          adjustsFontSizeToFit={true}
+                          style={{
+                              color: ACTIVE_COLOR,
+                              fontSize: 24,
+                              textAlignVertical: 'center',
+                              alignSelf: 'flex-end'
+                          }}>{props.result.toFixed(2)}</Text>
                 </View>
             </View>
         </View>
