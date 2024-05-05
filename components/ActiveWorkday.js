@@ -13,13 +13,13 @@ const ActiveWorkday = props => {
     const [openModal, setOpenModal] = React.useState(false);
 
     const addProduct = (nomenclatureId) => {
-        db.runAsync(INSERT_PRODUCTION, nomenclatureId, props.workdayId)
+        db.runAsync(INSERT_PRODUCTION, nomenclatureId, props.workday.id)
             .then(() => props.callback());
         setOpenModal(false);
     };
 
     const removeProduct = (nomenclatureId) => {
-        db.runAsync(DELETE_LAST_PRODUCTION, nomenclatureId, props.workdayId)
+        db.runAsync(DELETE_LAST_PRODUCTION, nomenclatureId, props.workday.id)
             .then(() => props.callback());
     };
 
@@ -53,7 +53,6 @@ const ActiveWorkday = props => {
             </View>
             <SlideModal visible={openModal} setVisible={setOpenModal}>
                 <AddNewProduct data={db.getAllSync(GET_ALL_NOMENCLATURES)}
-                               workdayId={props.workdayId}
                                callback={addProduct}/>
             </SlideModal>
         </>
