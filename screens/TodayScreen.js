@@ -8,7 +8,6 @@ import WorkdayHistory from '../components/WorkdayHistory';
 
 const TodayScreen = ({navigation}) => {
     const db = useSQLiteContext();
-    const [newWorkday, setIsNewWorkday] = React.useState(true);
     const [workday, setWorkday] = React.useState({});
     const [productions, setProductions] = React.useState([]);
 
@@ -17,9 +16,7 @@ const TodayScreen = ({navigation}) => {
         if (findWorkday) {
             setWorkday(findWorkday);
             setProductions(loadWorkdayById(findWorkday.id));
-            setIsNewWorkday(false);
         } else {
-            setIsNewWorkday(true);
             navigation.setOptions({
                 title: 'Рабочий период',
                 headerRight: () => null,
@@ -56,14 +53,14 @@ const TodayScreen = ({navigation}) => {
         db.runSync(FINISH_ACTIVE_WORKDAY, workday.id);
         setWorkday(null);
         setProductions(null);
-        setIsNewWorkday(true);
         navigation.setOptions({title: 'Рабочий период', headerRight: () => null,});
     };
 
-    if (newWorkday) {
-        return <WorkdayHistory setWorkdayId={setWorkday}/>;
+    if (workday) {
+        return <ActiveWorkday productions={productions} workday={workday} callback={callback}/>;
+
     }
-    return <ActiveWorkday productions={productions} workday={workday} callback={callback}/>;
+    return <WorkdayHistory setWorkdayId={setWorkday}/>;
 };
 
 export default TodayScreen;
