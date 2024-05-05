@@ -1,12 +1,13 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { BORDER_COLOR, ITEM_BACKGROUND_COLOR } from '../constants/Color';
+import { PALE_ACTIVE_COLOR, TEXT_COLOR } from '../constants/Color';
+import { listStyle } from '../style';
 
 export const AddNewProduct = props => {
 
     const Item = ({id, price, name}) => (
-        <TouchableOpacity style={styles.item} onPress={() => props.callback(id)}>
-            <View>
+        <TouchableOpacity style={listStyle.item} onPress={() => props.callback(id)}>
+            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                 <Text style={styles.title}>{name}</Text>
                 <Text style={styles.price}>{price}</Text>
             </View>
@@ -15,7 +16,7 @@ export const AddNewProduct = props => {
 
 
     return (
-        <View style={styles.container}>
+        <View style={listStyle.container}>
             <FlatList data={props.data}
                       renderItem={({item}) =>
                           <Item id={item.id} price={item.price} name={item.name}/>
@@ -23,23 +24,20 @@ export const AddNewProduct = props => {
                       keyExtractor={item => item.id}/>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginLeft: 8,
-        marginRight: 8,
+    title: {
+        color: TEXT_COLOR,
+        fontSize: 18,
     },
-    item: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: ITEM_BACKGROUND_COLOR,
-        borderWidth: 1,
-        borderColor: BORDER_COLOR,
-        padding: 20,
-        marginVertical: 8,
-        borderRadius: 8,
+    price: {
+        marginLeft: 12,
+        marginRight: 12,
+        textAlign: 'center',
+        justifyContent: 'center',
+        color: PALE_ACTIVE_COLOR,
+        fontSize: 32,
     }
 });
 

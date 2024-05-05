@@ -14,7 +14,7 @@ export const listStyle = StyleSheet.create({
         borderWidth: 1,
         borderColor: BORDER_COLOR,
         padding: 20,
-        marginVertical: 8,
+        marginTop: 12,
         borderRadius: 8,
     }
 });

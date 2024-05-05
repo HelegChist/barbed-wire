@@ -14,6 +14,7 @@ import {
     INSERT_PRODUCTION
 } from '../utils/sqlQueries';
 import FinishButton from '../components/FinishButton';
+import { listStyle } from '../style';
 
 const ActiveWorkdayScreen = ({navigation, route}) => {
     const db = useSQLiteContext();
@@ -70,7 +71,7 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
     };
 
     const Item = ({props}) => (
-        <View style={styles.item}>
+        <View style={listStyle.item}>
             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={styles.title}>{props.name}</Text>
                 <View style={{flexDirection: 'row'}}>
@@ -89,7 +90,7 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
 
     return (
         <>
-            <View style={styles.container}>
+            <View style={listStyle.container}>
                 <FlatList
                     data={productions}
                     renderItem={({item}) => <Item props={item}/>}
@@ -107,24 +108,6 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: StatusBar.currentHeight || 0,
-        marginLeft: 8,
-        marginRight: 8
-    },
-    item: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor:
-        ITEM_BACKGROUND_COLOR,
-        borderWidth: 1,
-        borderColor:
-        BORDER_COLOR,
-        padding: 20,
-        marginVertical: 8,
-        borderRadius: 8,
-    },
     title: {
         color: TEXT_COLOR,
         fontSize: 18,
