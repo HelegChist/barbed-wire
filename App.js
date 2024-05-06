@@ -1,10 +1,10 @@
 import React from 'react';
-import { ActivityIndicator, View, Text } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import DarculaTheme from './constants/DarculaTheme';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import TabNavigators from './navigations/TabNavigators';
-import { deleteDatabase, loadDatabase } from './utils/FileUtils';
+import { loadDatabase } from './utils/FileUtils';
 import { SQLiteProvider } from 'expo-sqlite/next';
 
 function App() {
@@ -12,17 +12,15 @@ function App() {
     const [dbLoaded, setDbLoaded] = React.useState(false);
 
     React.useEffect(() => {
-        deleteDatabase().then(() => {
-            loadDatabase()
-                .then(() => setDbLoaded(true))
-                .catch((e) => console.error(e));
-        })
+        loadDatabase()
+            .then(() => setDbLoaded(true))
+            .catch((e) => console.error(e));
     }, []);
 
     if (!dbLoaded)
         return (
             <View style={{flex: 1}}>
-                <ActivityIndicator size={"large"}/>
+                <ActivityIndicator size={'large'}/>
                 <Text>Loading Database...</Text>
             </View>
         );
@@ -30,7 +28,7 @@ function App() {
     return (
         <SafeAreaProvider>
             <NavigationContainer theme={DarculaTheme}>
-                <SQLiteProvider databaseName='barbedWire.db'>
+                <SQLiteProvider databaseName="barbedWire.db">
                     <TabNavigators/>
                 </SQLiteProvider>
             </NavigationContainer>
@@ -38,4 +36,4 @@ function App() {
     );
 }
 
-export default App
+export default App;
