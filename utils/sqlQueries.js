@@ -9,6 +9,7 @@ export const GET_ALL_WORKDAY = `
     FROM workday w
              JOIN production p ON p.workday_id = w.id
              JOIN nomenclature n ON p.nomenclature_id = n.id
+    WHERE w.end_to IS NOT NULL
     GROUP BY w.id
     ORDER BY w.start_at ASC`;
 export const GET_ACTIVE_WORKDAY = `

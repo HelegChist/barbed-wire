@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import TodayScreen from '../screens/TodayScreen';
 import ActiveWorkdayScreen from '../screens/ActiveWorkdayScreen';
-import WorkdayHistoryScreen from '../screens/WorkdayHistoryScreen';
+import { CreateNewWorkday } from '../screens/CreateNewWorkday';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +19,7 @@ const WorkdayStack = () => {
                 <Stack.Screen name="ActiveWorkdayScreen" component={ActiveWorkdayScreen}/>
             </Stack.Group>
             <Stack.Group screenOptions={{presentation: 'modal'}}>
-                <Stack.Screen name="WorkdayHistoryScreen" component={WorkdayHistoryScreen}/>
+                <Stack.Screen name="CreateNewWorkday" component={CreateNewWorkday}/>
             </Stack.Group>
         </Stack.Navigator>
     );

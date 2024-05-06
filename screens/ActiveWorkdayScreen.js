@@ -66,8 +66,12 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
     const finishWorkday = () => {
         db.runAsync(FINISH_ACTIVE_WORKDAY, calculateSum(), workday.id)
             .then(() => {
+                navigation.setOptions({
+                    headerTitle: 'Рабочий период',
+                });
                 navigation.goBack();
             });
+
     };
 
     const Item = ({props}) => (
@@ -116,7 +120,6 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
                                callback={addProduct}/>
             </SlideModal>
         </>
-
     );
 };
 

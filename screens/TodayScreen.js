@@ -11,7 +11,7 @@ const TodayScreen = ({navigation}) => {
             if (findWorkday) {
                 navigation.navigate('ActiveWorkdayScreen', {workday: findWorkday});
             } else {
-                navigation.navigate('WorkdayHistoryScreen');
+                navigation.navigate('CreateNewWorkday');
             }
         });
 

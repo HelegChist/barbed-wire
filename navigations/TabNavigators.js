@@ -3,6 +3,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SettingStack from './SettingStack';
 import WorkdayStack from './WorkdayStack';
+import WorkdayHistoryScreen from '../screens/WorkdayHistoryScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,6 +23,8 @@ const TabNavigators = () => {
                         iconName = 'man-sharp';
                     } else if (route.name === 'Settings') {
                         iconName = 'list-outline';
+                    } else if (route.name === 'History') {
+                        iconName = 'server-outline';
                     }
                     return <Ionicons name={iconName} size={size} color={color}/>;
                 },
@@ -30,7 +33,10 @@ const TabNavigators = () => {
             })}>
             <Tab.Screen name="Workday"
                         component={WorkdayStack}
-                        options={{title: 'Выработка'}}/>
+                        options={{title: 'Рабочий период'}}/>
+            <Tab.Screen name="History"
+                        component={WorkdayHistoryScreen}
+                        options={{title: 'История'}}/>
             <Tab.Screen name="Settings"
                         component={SettingStack}
                         options={{title: 'Настройки'}}/>
