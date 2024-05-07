@@ -33,7 +33,7 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
             return;
         }
         parentNavigation.setOptions({
-            headerTitle: `Итог${workday.ratio ? ` [x${workday.ratio}]` : ''}: ` + calculateSum(),
+            headerTitle: `Итог${workday.ratio ? ` [x${workday.ratio.toFixed(2)}]` : ''}: ` + calculateSum(),
             headerRight: () => <FinishButton onAddPress={() => finishWorkday()}/>,
         });
     }, [productions]);
@@ -66,12 +66,12 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
     const finishWorkday = () => {
         db.runAsync(FINISH_ACTIVE_WORKDAY, calculateSum(), workday.id)
             .then(() => {
-                navigation.setOptions({
+                parentNavigation.setOptions({
                     headerTitle: 'Рабочий период',
+                    headerRight: () => null
                 });
                 navigation.goBack();
             });
-
     };
 
     const Item = ({props}) => (
@@ -82,7 +82,7 @@ const ActiveWorkdayScreen = ({navigation, route}) => {
                     <View style={{flex: 1, flexDirection: 'row'}}>
                         <Text style={workday.ratio ? styles.cross : styles.price}>{props.price}</Text>
                         {workday.ratio ?
-                            <Text style={styles.price}> {props.price * workday.ratio} </Text> :
+                            <Text style={styles.price}> {(props.price * workday.ratio).toFixed(2)} </Text> :
                             ''
                         }
                     </View>
