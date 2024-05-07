@@ -18,6 +18,7 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/wire.png",
         "backgroundColor": "#A9B7C6"
