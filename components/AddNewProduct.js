@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { PALE_ACTIVE_COLOR, TEXT_COLOR } from '../constants/Color';
-import { listStyle } from '../style';
+import { listStyle, textStyle } from '../style';
 
 export const AddNewProduct = props => {
 
@@ -17,6 +17,7 @@ export const AddNewProduct = props => {
 
     return (
         <View style={listStyle.container}>
+            <Text style={textStyle.header}>Продукция</Text>
             <FlatList data={props.data}
                       renderItem={({item}) =>
                           <Item id={item.id} price={item.price} name={item.name}/>

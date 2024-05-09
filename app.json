@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Колючка",
+    "name": "Клчка",
     "slug": "barbed-wire",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/wire.png",
     "userInterfaceStyle": "automatic",
@@ -18,7 +18,7 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/wire.png",
         "backgroundColor": "#A9B7C6"
